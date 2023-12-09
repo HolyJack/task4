@@ -24,7 +24,12 @@ app.use(
   }),
 );
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://task4-react-front.vercel.app",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(passport.session());
 
