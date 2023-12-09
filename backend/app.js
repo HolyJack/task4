@@ -33,7 +33,7 @@ app.use((0, express_session_1.default)({
     cookie: {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "lax",
         maxAge: oneDay,
         domain: ".vercel.app",
     },

@@ -22,7 +22,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "lax",
       maxAge: oneDay,
       domain: ".vercel.app",
     },
