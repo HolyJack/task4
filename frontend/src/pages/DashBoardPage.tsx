@@ -41,7 +41,6 @@ export default function DashboardPage() {
   const [cookies] = useCookies(["connect.sid"]);
 
   const fetchUsers = useCallback(async () => {
-    if (!cookies["connect.sid"]) return;
     try {
       const res = await axios.get("users");
       const users = parseDataToUsers(res);
@@ -52,7 +51,7 @@ export default function DashboardPage() {
       if (axios.isAxiosError(err)) window.alert(err.response?.data?.message);
       else console.log(err);
     }
-  }, [cookies]);
+  }, []);
 
   useEffect(() => {
     fetchUsers();
@@ -97,7 +96,7 @@ export default function DashboardPage() {
     }
   }
 
-  if (cookies["connect.sid"] && users && colDef) {
+  if (users && colDef) {
     return (
       <div className="flex h-full w-full flex-col gap-2">
         <div className="flex gap-2">
