@@ -13,6 +13,7 @@ const port = 3000;
 const env = config();
 
 app.use(passport.initialize());
+const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
     secret: env.parsed?.SECRET || "dev",
@@ -20,9 +21,10 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: false,
-      expires: new Date(1000 * 60 * 60 * 24),
       secure: true,
-      sameSite: true,
+      sameSite: "none",
+      maxAge: oneDay,
+      domain: "vercel.app",
     },
   }),
 );
