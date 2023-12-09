@@ -38,7 +38,7 @@ export default function DashboardPage() {
   const gridRef = useRef<AgGridReact<User>>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [colDef, setColDef] = useState<ColDef[]>([]);
-  const [cookies] = useCookies(["connect.sid"]);
+  const cookies = { "connect.sid": true };
 
   const fetchUsers = useCallback(async () => {
     if (!cookies["connect.sid"]) return;
