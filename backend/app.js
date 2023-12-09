@@ -31,7 +31,7 @@ app.use((0, express_session_1.default)({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        httpOnly: true,
+        httpOnly: false,
         secure: true,
         maxAge: oneDay,
         sameSite: "none",
