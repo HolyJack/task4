@@ -1,7 +1,7 @@
 {
   "version": 2,
   "builds": [
-    { "src": "frontend/**", "use": "@vercel/node", "env": { "NPM_FLAGS": "--force" } },
+    { "src": "frontend/**", "use": "@vercel/node", "installCommand": "npm install --force"},
     { "src": "backend/**", "use": "@vercel/node" }
   ],
   "routes": [
