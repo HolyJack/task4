@@ -33,10 +33,7 @@ app.use((0, express_session_1.default)({
         httpOnly: false,
     },
 }));
-app.use((0, cors_1.default)({
-    origin: "task4-front-snowy.vercel.app",
-    credentials: true,
-}));
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(passport_1.default.session());
 passport_1.default.use(new passport_local_1.Strategy((username, password, done) => __awaiter(void 0, void 0, void 0, function* () {
