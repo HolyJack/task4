@@ -22,9 +22,8 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
       maxAge: oneDay,
-      domain: ".vercel.app",
+      sameSite: "none",
     },
   }),
 );

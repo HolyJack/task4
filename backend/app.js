@@ -33,9 +33,8 @@ app.use((0, express_session_1.default)({
     cookie: {
         httpOnly: true,
         secure: true,
-        sameSite: "none",
         maxAge: oneDay,
-        domain: ".vercel.app",
+        sameSite: "none",
     },
 }));
 app.use((0, cors_1.default)({
