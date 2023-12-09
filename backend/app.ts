@@ -22,6 +22,7 @@ app.use(
     cookie: {
       httpOnly: false,
       maxAge: oneDay,
+      sameSite: "none",
     },
   }),
 );
