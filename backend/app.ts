@@ -23,6 +23,7 @@ app.use(
       httpOnly: false,
       maxAge: oneDay,
       sameSite: "none",
+      secure: true,
     },
   }),
 );

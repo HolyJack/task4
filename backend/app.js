@@ -34,6 +34,7 @@ app.use((0, express_session_1.default)({
         httpOnly: false,
         maxAge: oneDay,
         sameSite: "none",
+        secure: true,
     },
 }));
 app.use((0, cors_1.default)({
