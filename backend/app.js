@@ -31,6 +31,7 @@ app.use((0, express_session_1.default)({
     saveUninitialized: false,
     cookie: {
         httpOnly: false,
+        maxAge: 60 * 60 * 24 * 1,
     },
 }));
 app.use((0, cors_1.default)({
