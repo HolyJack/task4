@@ -32,9 +32,7 @@ app.use((0, express_session_1.default)({
     saveUninitialized: false,
     cookie: {
         httpOnly: false,
-        secure: true,
         maxAge: oneDay,
-        sameSite: "none",
     },
 }));
 app.use((0, cors_1.default)({
