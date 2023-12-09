@@ -24,7 +24,6 @@ app.use(
       secure: true,
       maxAge: oneDay,
       sameSite: "none",
-      domain: "task4-react-front.vercel.app",
     },
   }),
 );

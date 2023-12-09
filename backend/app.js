@@ -35,7 +35,6 @@ app.use((0, express_session_1.default)({
         secure: true,
         maxAge: oneDay,
         sameSite: "none",
-        domain: "task4-react-front.vercel.app",
     },
 }));
 app.use((0, cors_1.default)({
