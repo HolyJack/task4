@@ -24,7 +24,7 @@ app.use(
       secure: true,
       sameSite: "none",
       maxAge: oneDay,
-      domain: "vercel.app",
+      domain: ".vercel.app",
     },
   }),
 );

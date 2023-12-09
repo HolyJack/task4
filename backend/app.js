@@ -35,7 +35,7 @@ app.use((0, express_session_1.default)({
         secure: true,
         sameSite: "none",
         maxAge: oneDay,
-        domain: "vercel.app",
+        domain: ".vercel.app",
     },
 }));
 app.use((0, cors_1.default)({
