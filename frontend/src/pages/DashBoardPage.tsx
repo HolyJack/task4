@@ -4,7 +4,8 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { ColDef } from "ag-grid-community";
 import axios, { AxiosResponse } from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { authStatus, logout } from "../utils/auth";
+import { authGetStatus, logout } from "../utils/auth";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   username: string;
@@ -38,6 +39,8 @@ export default function DashboardPage() {
   const gridRef = useRef<AgGridReact<User>>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [colDef, setColDef] = useState<ColDef[]>([]);
+  const authStatus = authGetStatus();
+  const nav = useNavigate();
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -67,7 +70,11 @@ export default function DashboardPage() {
       const res = await axios.patch("users", {
         data: { usernames, active },
       });
-      if (res.status === 401) return logout();
+      if (res.status === 401) {
+        logout();
+        nav(0);
+        return;
+      }
       await fetchUsers();
     } catch (err) {
       if (axios.isAxiosError(err)) window.alert(err.response?.data?.message);
@@ -91,14 +98,19 @@ export default function DashboardPage() {
       const res = await axios.delete("users", {
         data: { usernames },
       });
-      if (res.status === 401) return logout();
+      if (res.status === 401) {
+        logout();
+        nav(0);
+        return;
+      }
+
       await fetchUsers();
     } catch (err) {
       if (err) console.log(err);
     }
   }
 
-  if (authStatus() && users && colDef) {
+  if (authStatus && users && colDef) {
     return (
       <div className="flex h-full w-full flex-col gap-2">
         <div className="flex gap-2">
@@ -133,7 +145,7 @@ export default function DashboardPage() {
     );
   }
 
-  if (!authStatus())
+  if (!authStatus)
     return (
       <div className="flex w-full justify-center p-2">
         <p className="font-semibold">You have to sign in!</p>

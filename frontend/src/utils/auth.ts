@@ -6,11 +6,10 @@ function login() {
 
 function logout() {
   sessionStorage.removeItem(AUTH);
-  window.location.reload();
 }
 
-function authStatus() {
+function authGetStatus() {
   return sessionStorage.getItem(AUTH);
 }
 
-export { login, logout, authStatus };
+export { login, logout, authGetStatus };
