@@ -20,6 +20,8 @@ export default async function checkActiveStatus(
             res.send();
           });
         });
+      } else {
+        return next();
       }
     } catch (error) {
       console.error("Error checking active status:", error);
