@@ -59,15 +59,14 @@ export default function DashboardPage() {
     }
   }, [nav]);
 
-  useEffect(() => {
-    async function getUsers() {
-      const users = await fetchUsers();
-      if (users) {
-        setUsers(users);
-      }
-    }
-    getUsers();
+  const getUsers = useCallback(async () => {
+    const users = await fetchUsers();
+    setUsers(users || []);
   }, [fetchUsers]);
+
+  useEffect(() => {
+    getUsers();
+  }, [getUsers]);
 
   async function updateStatus(active: boolean) {
     const selected = gridRef.current?.api.getSelectedRows();
@@ -84,7 +83,7 @@ export default function DashboardPage() {
         nav(0);
         return;
       }
-      await fetchUsers();
+      await getUsers();
     } catch (err) {
       if (axios.isAxiosError(err)) window.alert(err.response?.data?.message);
       else console.log(err);
@@ -113,7 +112,7 @@ export default function DashboardPage() {
         return;
       }
 
-      await fetchUsers();
+      await getUsers();
     } catch (err) {
       if (err) console.log(err);
     }
