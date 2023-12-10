@@ -6,7 +6,6 @@ function login() {
 
 function logout() {
   sessionStorage.removeItem(AUTH);
-  if (nav && path) nav(path);
 }
 
 function authGetStatus() {
