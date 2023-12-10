@@ -4,6 +4,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { ColDef } from "ag-grid-community";
 import axios, { AxiosResponse } from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { logout } from "../utils/auth";
 
 interface User {
   username: string;
@@ -42,6 +43,7 @@ export default function DashboardPage() {
   const fetchUsers = useCallback(async () => {
     try {
       const res = await axios.get("users");
+      if (res.status === 401) return logout();
       const users = parseDataToUsers(res);
       const columns = parseUserToCols(users);
       setUsers(users);
@@ -63,9 +65,10 @@ export default function DashboardPage() {
     try {
       const usernames = selected.map((row) => row.username);
 
-      await axios.patch("users", {
+      const res = await axios.patch("users", {
         data: { usernames, active },
       });
+      if (res.status === 401) return logout();
       await fetchUsers();
     } catch (err) {
       if (axios.isAxiosError(err)) window.alert(err.response?.data?.message);
@@ -86,9 +89,10 @@ export default function DashboardPage() {
     if (!selected) return;
     try {
       const usernames = selected.map((row) => row.username);
-      await axios.delete("users", {
+      const res = await axios.delete("users", {
         data: { usernames },
       });
+      if (res.status === 401) return logout();
       await fetchUsers();
     } catch (err) {
       if (err) console.log(err);

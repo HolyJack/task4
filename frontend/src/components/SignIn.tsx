@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import FormSubmit from "./FormSubmit";
 import axios from "../utils/axios";
+import { login } from "../utils/auth";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function SignIn() {
         username,
         password,
       });
-      sessionStorage.setItem("signedin", "true");
+      login();
       navigate("/dashboard");
     } catch (err) {
       if (axios.isAxiosError(err)) window.alert(err.response?.data?.message);
@@ -52,6 +53,7 @@ export default function SignIn() {
             placeholder:text-gray-300 focus:placeholder:text-transparent"
           type="password"
           name="password"
+          autoComplete="current-password"
           placeholder="Password"
           required
         />

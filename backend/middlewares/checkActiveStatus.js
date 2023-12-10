@@ -27,6 +27,9 @@ function checkActiveStatus(req, res, next) {
                         });
                     });
                 }
+                else {
+                    return next();
+                }
             }
             catch (error) {
                 console.error("Error checking active status:", error);
