@@ -1,12 +1,11 @@
-import { useCookies } from "react-cookie";
 import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
 import SignOut from "../components/SignOut";
 
 export default function MainPage() {
-  const [cookies] = useCookies(["connect.sid"]);
+  const signedin = sessionStorage.getItem("signedin");
 
-  if (cookies["connect.sid"])
+  if (signedin)
     return (
       <div className="flex w-full justify-center">
         <SignOut className="rounded-md border shadow" />

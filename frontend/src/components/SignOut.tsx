@@ -1,10 +1,9 @@
 import axios from "axios";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 export default function SignOut({ className }: { className?: string }) {
   const navigate = useNavigate();
-  const [cookies] = useCookies(["connect.sid"]);
+  const signedin = sessionStorage.getItem("signedin");
 
   async function signOut() {
     try {
@@ -20,7 +19,7 @@ export default function SignOut({ className }: { className?: string }) {
     "flex h-12 w-32 items-center justify-center hover:bg-blue-400 hover:text-white " +
     className;
 
-  if (cookies["connect.sid"])
+  if (signedin)
     return (
       <button className={signButtonStyle} onClick={signOut}>
         Sign Out

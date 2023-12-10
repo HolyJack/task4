@@ -17,6 +17,7 @@ export default function SignIn() {
         username,
         password,
       });
+      sessionStorage.setItem("signedin", "true");
       navigate("/dashboard");
     } catch (err) {
       if (axios.isAxiosError(err)) window.alert(err.response?.data?.message);

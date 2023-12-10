@@ -4,7 +4,6 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { ColDef } from "ag-grid-community";
 import axios, { AxiosResponse } from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useCookies } from "react-cookie";
 
 interface User {
   username: string;
@@ -38,7 +37,7 @@ export default function DashboardPage() {
   const gridRef = useRef<AgGridReact<User>>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [colDef, setColDef] = useState<ColDef[]>([]);
-  const [cookies] = useCookies(["connect.sid"]);
+  const signedin = sessionStorage.getItem("signedin");
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -96,7 +95,7 @@ export default function DashboardPage() {
     }
   }
 
-  if (users && colDef) {
+  if (signedin && users && colDef) {
     return (
       <div className="flex h-full w-full flex-col gap-2">
         <div className="flex gap-2">
@@ -131,7 +130,7 @@ export default function DashboardPage() {
     );
   }
 
-  if (!cookies["connect.sid"])
+  if (!signedin)
     return (
       <div className="flex w-full justify-center p-2">
         <p className="font-semibold">You have to sign in!</p>
