@@ -19,6 +19,7 @@ app.use(
     secret: env.parsed?.SECRET || "dev",
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     cookie: {
       httpOnly: false,
       maxAge: oneDay,

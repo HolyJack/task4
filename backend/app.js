@@ -30,6 +30,7 @@ app.use((0, express_session_1.default)({
     secret: ((_a = env.parsed) === null || _a === void 0 ? void 0 : _a.SECRET) || "dev",
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     cookie: {
         httpOnly: false,
         maxAge: oneDay,
