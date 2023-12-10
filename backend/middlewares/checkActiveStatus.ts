@@ -7,27 +7,23 @@ export default async function checkActiveStatus(
   res: Response,
   next: NextFunction,
 ) {
-  if (req.isAuthenticated()) {
-    const userId = (req.user as User).id;
+  const userId = (req.user as User).id;
 
-    try {
-      const user = await prisma.user.findUnique({ where: { id: userId } });
+  try {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
 
-      if (!user || !user.active) {
-        res.clearCookie("connect.sid");
-        req.logout(function () {
-          req.session.destroy(function () {
-            res.send();
-          });
+    if (!user || !user.active) {
+      res.clearCookie("connect.sid");
+      return req.logout(function () {
+        return req.session.destroy(function () {
+          return res.send();
         });
-      } else {
-        return next();
-      }
-    } catch (error) {
-      console.error("Error checking active status:", error);
-      return res.status(500).json({ error: "Internal Server Error" });
+      });
+    } else {
+      return next();
     }
-  } else {
-    return next();
+  } catch (error) {
+    console.error("Error checking active status:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }

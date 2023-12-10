@@ -15,29 +15,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = __importDefault(require("../utils/db"));
 function checkActiveStatus(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (req.isAuthenticated()) {
-            const userId = req.user.id;
-            try {
-                const user = yield db_1.default.user.findUnique({ where: { id: userId } });
-                if (!user || !user.active) {
-                    res.clearCookie("connect.sid");
-                    req.logout(function () {
-                        req.session.destroy(function () {
-                            res.send();
-                        });
+        const userId = req.user.id;
+        try {
+            const user = yield db_1.default.user.findUnique({ where: { id: userId } });
+            if (!user || !user.active) {
+                res.clearCookie("connect.sid");
+                return req.logout(function () {
+                    return req.session.destroy(function () {
+                        return res.send();
                     });
-                }
-                else {
-                    return next();
-                }
+                });
             }
-            catch (error) {
-                console.error("Error checking active status:", error);
-                return res.status(500).json({ error: "Internal Server Error" });
+            else {
+                return next();
             }
         }
-        else {
-            return next();
+        catch (error) {
+            console.error("Error checking active status:", error);
+            return res.status(500).json({ error: "Internal Server Error" });
         }
     });
 }
