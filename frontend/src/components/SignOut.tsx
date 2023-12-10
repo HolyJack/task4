@@ -8,6 +8,7 @@ export default function SignOut({ className }: { className?: string }) {
   async function signOut() {
     try {
       await axios.delete("signout");
+      sessionStorage.removeItem("signedin");
       navigate(0);
     } catch (err) {
       if (axios.isAxiosError(err)) window.alert(err.response?.data?.message);
