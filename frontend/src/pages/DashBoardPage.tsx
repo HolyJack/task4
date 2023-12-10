@@ -44,12 +44,16 @@ export default function DashboardPage() {
   const authStatus = authGetStatus();
   const nav = useNavigate();
 
+  const logoutFromDashboard = useCallback(() => {
+    logout();
+    nav("/");
+  }, [nav]);
+
   const fetchUsers = useCallback(async () => {
     try {
       const res = await axios.get("users");
       if (res.status === 401) {
-        logout();
-        nav(0);
+        logoutFromDashboard();
         return;
       }
       return parseDataToUsers(res);
@@ -57,7 +61,7 @@ export default function DashboardPage() {
       if (axios.isAxiosError(err)) window.alert(err.response?.data?.message);
       else console.log(err);
     }
-  }, [nav]);
+  }, [logoutFromDashboard]);
 
   const getUsers = useCallback(async () => {
     const users = await fetchUsers();
@@ -79,8 +83,7 @@ export default function DashboardPage() {
         data: { usernames, active },
       });
       if (res.status === 401) {
-        logout();
-        nav(0);
+        logoutFromDashboard();
         return;
       }
       await getUsers();
@@ -107,8 +110,7 @@ export default function DashboardPage() {
         data: { usernames },
       });
       if (res.status === 401) {
-        logout();
-        nav(0);
+        logoutFromDashboard();
         return;
       }
 
