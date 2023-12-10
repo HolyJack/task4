@@ -45,6 +45,7 @@ export default function SignIn() {
             placeholder:text-gray-300 focus:placeholder:text-transparent"
           name="username"
           type="text"
+          autoComplete="username"
           placeholder="Username"
           required
         />

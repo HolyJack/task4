@@ -63,6 +63,7 @@ export default function SignUp() {
             placeholder:text-gray-300 focus:placeholder:text-transparent"
           name="password"
           type="password"
+          autoComplete="current-password"
           placeholder="Password"
           required
         />

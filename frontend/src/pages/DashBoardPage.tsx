@@ -26,19 +26,21 @@ function parseDataToUsers(res: AxiosResponse) {
   return users;
 }
 
-function parseUserToCols(users: User[]) {
-  const columns = Object.keys(users[0]).map((col, i) => ({
-    field: col,
-    checkboxSelection: i === 0 ? true : false,
-    headerCheckboxSelection: i === 0 ? true : false,
-  }));
+function parseUsersToCols(users: User[]) {
+  const columns = users.length
+    ? Object.keys(users[0]).map((col, i) => ({
+        field: col,
+        checkboxSelection: i === 0 ? true : false,
+        headerCheckboxSelection: i === 0 ? true : false,
+      }))
+    : [];
   return columns;
 }
 
 export default function DashboardPage() {
   const gridRef = useRef<AgGridReact<User>>(null);
   const [users, setUsers] = useState<User[]>([]);
-  const colDef: ColDef[] = parseUserToCols(users);
+  const colDef: ColDef[] = parseUsersToCols(users);
   const authStatus = authGetStatus();
   const nav = useNavigate();
 
