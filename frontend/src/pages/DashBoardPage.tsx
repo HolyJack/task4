@@ -15,14 +15,14 @@ interface User {
 }
 
 function parseDataToUsers(res: AxiosResponse) {
-  const users: User[] = (res.data as User[]).map(
-    ({ username, createdAt, signinAt, active }) => ({
+  const users: User[] =
+    res.data &&
+    (res.data as User[]).map(({ username, createdAt, signinAt, active }) => ({
       username,
       createdAt: new Date(createdAt).toString(),
       signinAt: signinAt ? new Date(signinAt).toString() : "never",
       active,
-    }),
-  );
+    }));
   return users;
 }
 
@@ -38,26 +38,33 @@ function parseUserToCols(users: User[]) {
 export default function DashboardPage() {
   const gridRef = useRef<AgGridReact<User>>(null);
   const [users, setUsers] = useState<User[]>([]);
-  const [colDef, setColDef] = useState<ColDef[]>([]);
+  const colDef: ColDef[] = parseUserToCols(users);
   const authStatus = authGetStatus();
   const nav = useNavigate();
 
   const fetchUsers = useCallback(async () => {
     try {
       const res = await axios.get("users");
-      if (res.status === 401) return logout();
-      const users = parseDataToUsers(res);
-      const columns = parseUserToCols(users);
-      setUsers(users);
-      setColDef(columns);
+      if (res.status === 401) {
+        logout();
+        nav(0);
+        return;
+      }
+      return parseDataToUsers(res);
     } catch (err) {
       if (axios.isAxiosError(err)) window.alert(err.response?.data?.message);
       else console.log(err);
     }
-  }, []);
+  }, [nav]);
 
   useEffect(() => {
-    fetchUsers();
+    async function getUsers() {
+      const users = await fetchUsers();
+      if (users) {
+        setUsers(users);
+      }
+    }
+    getUsers();
   }, [fetchUsers]);
 
   async function updateStatus(active: boolean) {
