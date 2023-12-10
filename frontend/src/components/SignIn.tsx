@@ -14,7 +14,7 @@ export default function SignIn() {
     password: string;
   }) {
     try {
-      await axios.post("signin", {
+      const res = await axios.post("signin", {
         username,
         password,
       });

@@ -4,7 +4,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { ColDef } from "ag-grid-community";
 import axios, { AxiosResponse } from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { logout } from "../utils/auth";
+import { authStatus, logout } from "../utils/auth";
 
 interface User {
   username: string;
