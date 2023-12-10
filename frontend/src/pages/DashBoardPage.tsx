@@ -38,7 +38,6 @@ export default function DashboardPage() {
   const gridRef = useRef<AgGridReact<User>>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [colDef, setColDef] = useState<ColDef[]>([]);
-  const signedin = sessionStorage.getItem("signedin");
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -99,7 +98,7 @@ export default function DashboardPage() {
     }
   }
 
-  if (signedin && users && colDef) {
+  if (authStatus() && users && colDef) {
     return (
       <div className="flex h-full w-full flex-col gap-2">
         <div className="flex gap-2">
@@ -134,7 +133,7 @@ export default function DashboardPage() {
     );
   }
 
-  if (!signedin)
+  if (!authStatus())
     return (
       <div className="flex w-full justify-center p-2">
         <p className="font-semibold">You have to sign in!</p>
