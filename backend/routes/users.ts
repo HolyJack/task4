@@ -1,10 +1,13 @@
 import express from "express";
 import prisma from "../utils/db";
-import authenticate from "../middlewares/authenticate";
+import authenticateStatus from "../middlewares/authenticateStatus";
+import checkActiveStatus from "../middlewares/checkActiveStatus";
 
 const users = express.Router();
+users.use(checkActiveStatus);
+users.use(authenticateStatus);
 
-users.get("/users", authenticate, async (_, res) => {
+users.get("/users", async (_, res) => {
   const users = await prisma.user.findMany({
     select: {
       username: true,
@@ -16,7 +19,7 @@ users.get("/users", authenticate, async (_, res) => {
   res.send(users);
 });
 
-users.patch("/users", authenticate, async (req, res) => {
+users.patch("/users", async (req, res) => {
   const usernames = req.body.data.usernames;
   const active = req.body.data.active;
   await prisma.user.updateMany({
@@ -26,7 +29,7 @@ users.patch("/users", authenticate, async (req, res) => {
   res.status(204).send();
 });
 
-users.delete("/users", authenticate, async (req, res) => {
+users.delete("/users", async (req, res) => {
   const usernames = req.body.usernames;
   await prisma.user.deleteMany({
     where: { username: { in: usernames } },

@@ -15,10 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.users = void 0;
 const express_1 = __importDefault(require("express"));
 const db_1 = __importDefault(require("../utils/db"));
-const authenticate_1 = __importDefault(require("../middlewares/authenticate"));
+const authenticateStatus_1 = __importDefault(require("../middlewares/authenticateStatus"));
+const checkActiveStatus_1 = __importDefault(require("../middlewares/checkActiveStatus"));
 const users = express_1.default.Router();
 exports.users = users;
-users.get("/users", authenticate_1.default, (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+users.use(checkActiveStatus_1.default);
+users.use(authenticateStatus_1.default);
+users.get("/users", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield db_1.default.user.findMany({
         select: {
             username: true,
@@ -29,7 +32,7 @@ users.get("/users", authenticate_1.default, (_, res) => __awaiter(void 0, void 0
     });
     res.send(users);
 }));
-users.patch("/users", authenticate_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+users.patch("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const usernames = req.body.data.usernames;
     const active = req.body.data.active;
     yield db_1.default.user.updateMany({
@@ -38,7 +41,7 @@ users.patch("/users", authenticate_1.default, (req, res) => __awaiter(void 0, vo
     });
     res.status(204).send();
 }));
-users.delete("/users", authenticate_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+users.delete("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const usernames = req.body.usernames;
     yield db_1.default.user.deleteMany({
         where: { username: { in: usernames } },

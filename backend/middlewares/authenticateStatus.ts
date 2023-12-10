@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-export default function authenticate(
+export default function authenticateStatus(
   req: Request,
   res: Response,
   next: NextFunction,
