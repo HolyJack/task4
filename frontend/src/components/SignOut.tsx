@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { authStatus, logout } from "../utils/auth";
+import { authGetStatus, logout } from "../utils/auth";
 
 export default function SignOut({ className }: { className?: string }) {
   const navigate = useNavigate();
+  const authStatus = authGetStatus();
 
   async function signOut() {
     try {
@@ -20,7 +21,7 @@ export default function SignOut({ className }: { className?: string }) {
     "flex h-12 w-32 items-center justify-center hover:bg-blue-400 hover:text-white " +
     className;
 
-  if (authStatus())
+  if (authStatus)
     return (
       <button className={signButtonStyle} onClick={signOut}>
         Sign Out
