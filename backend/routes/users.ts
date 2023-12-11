@@ -4,8 +4,8 @@ import authenticateStatus from "../middlewares/authenticateStatus";
 import checkActiveStatus from "../middlewares/checkActiveStatus";
 
 const users = express.Router();
-users.use(checkActiveStatus);
 users.use(authenticateStatus);
+users.use(checkActiveStatus);
 
 users.get("/users", async (_, res, next) => {
   const users = await prisma.user.findMany({

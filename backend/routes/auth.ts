@@ -17,7 +17,7 @@ auth.post("/signin", (req, res, next) =>
           data: { signinAt: new Date().toISOString() },
         });
       } catch (err) {
-        next(err);
+        return next(err);
       }
       return res.json({ message: "Login successful!", user: user.username });
     });

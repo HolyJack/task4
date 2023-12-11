@@ -8,6 +8,7 @@ export default function authenticateStatus(
   if (req.isAuthenticated()) {
     return next();
   } else {
-    return res.status(401).json({ message: "Unauthorized" });
+    res.status(401).json({ message: "Unauthorized" });
+    res.send();
   }
 }
