@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import Dashboard from "./Dashboard";
-import usersApi, { User } from "../utils/users";
+import { User } from "../utils/users";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { ActionFunction, Form, redirect } from "react-router-dom";
+import { Form } from "react-router-dom";
 
 function parseUsersToCols(users: User[]) {
   const columns = users.length
@@ -36,7 +36,7 @@ export default function DashboardControl({ users }: { users: User[] }) {
     <div className="flex h-full w-full flex-col gap-2">
       <div className="flex gap-2">
         <Form method="post" action="block">
-          <input name="selected" value={selected || []} hidden readOnly />
+          <input name="selected" value={selected} hidden readOnly />
           <button
             type="submit"
             className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
@@ -45,7 +45,7 @@ export default function DashboardControl({ users }: { users: User[] }) {
           </button>
         </Form>
         <Form method="post" action="unblock">
-          <input name="selected" value={selected || []} hidden readOnly />
+          <input name="selected" value={selected} hidden readOnly />
           <button
             type="submit"
             className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
@@ -54,7 +54,7 @@ export default function DashboardControl({ users }: { users: User[] }) {
           </button>
         </Form>
         <Form method="post" action="delete">
-          <input name="selected" value={selected || []} hidden readOnly />
+          <input name="selected" value={selected} hidden readOnly />
           <button
             type="submit"
             className="h-12 w-32 rounded-md border bg-red-500 text-white hover:bg-red-500/80"
