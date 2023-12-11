@@ -14,11 +14,12 @@ export default async function checkActiveStatus(
 
     if (!user || !user.active) {
       res.clearCookie("connect.sid");
-      return req.logout(function () {
+      req.logout(function () {
         return req.session.destroy(function () {
           return res.send();
         });
       });
+      return res.redirect("/");
     } else {
       return next();
     }

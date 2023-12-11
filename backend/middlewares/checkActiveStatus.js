@@ -20,11 +20,12 @@ function checkActiveStatus(req, res, next) {
             const user = yield db_1.default.user.findUnique({ where: { id: userId } });
             if (!user || !user.active) {
                 res.clearCookie("connect.sid");
-                return req.logout(function () {
+                req.logout(function () {
                     return req.session.destroy(function () {
                         return res.send();
                     });
                 });
+                return res.redirect("/");
             }
             else {
                 return next();
