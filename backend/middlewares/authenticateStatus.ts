@@ -9,6 +9,6 @@ export default function authenticateStatus(
     return next();
   } else {
     res.status(401).json({ message: "Unauthorized" });
-    res.send();
+    return res.send();
   }
 }

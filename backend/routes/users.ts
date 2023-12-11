@@ -18,7 +18,7 @@ users.get("/users", async (_, res, next) => {
   });
   res.status(200).json(users);
   console.log("get 200");
-  next();
+  res.send();
 });
 
 users.patch("/users", async (req, res, next) => {
