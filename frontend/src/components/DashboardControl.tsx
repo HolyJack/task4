@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { useRef } from "react";
 import Dashboard from "./Dashboard";
 import usersApi, { User } from "../utils/users";
 import { ColDef } from "ag-grid-community";
@@ -27,7 +27,7 @@ export default function DashboardControl({ users }: { users: User[] }) {
 
     const usernames = selected.map((row) => row.username);
     const data = { usernames, active };
-    await usersApi.update(data);
+    console.log(await usersApi.update(data));
     revalidator.revalidate();
   }
 
@@ -43,7 +43,7 @@ export default function DashboardControl({ users }: { users: User[] }) {
     const selected = dashboardRef.current?.api.getSelectedRows();
     if (!selected) return;
     const usernames = selected.map((row) => row.username);
-    await usersApi.delete(usernames);
+    console.log(await usersApi.delete(usernames));
     revalidator.revalidate();
   }
 
