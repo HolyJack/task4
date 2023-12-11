@@ -21,7 +21,7 @@ const users = express_1.default.Router();
 exports.users = users;
 users.use(checkActiveStatus_1.default);
 users.use(authenticateStatus_1.default);
-users.get("/users", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+users.get("/users", (_, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield db_1.default.user.findMany({
         select: {
             username: true,
@@ -30,21 +30,25 @@ users.get("/users", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
             active: true,
         },
     });
-    res.send(users);
+    res.json(users);
+    return next();
 }));
-users.patch("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const usernames = req.body.data.usernames;
     const active = req.body.data.active;
     yield db_1.default.user.updateMany({
         where: { username: { in: usernames } },
         data: { active },
     });
-    res.status(204).send();
+    res.status(204);
+    return next();
 }));
-users.delete("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+users.delete("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const usernames = req.body.usernames;
     yield db_1.default.user.deleteMany({
         where: { username: { in: usernames } },
     });
-    res.status(204).send();
+    res.status(204);
+    return next();
 }));
+users.use(checkActiveStatus_1.default);
