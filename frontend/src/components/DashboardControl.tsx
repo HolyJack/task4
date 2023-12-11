@@ -3,7 +3,7 @@ import Dashboard from "./Dashboard";
 import usersApi, { User } from "../utils/users";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { Form, useRevalidator } from "react-router-dom";
+import { Form } from "react-router-dom";
 
 function parseUsersToCols(users: User[]) {
   const columns = users.length
