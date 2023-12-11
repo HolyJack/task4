@@ -50,7 +50,7 @@ export default function DashboardControl({ users }: { users: User[] }) {
   return (
     <div className="flex h-full w-full flex-col gap-2">
       <div className="flex gap-2">
-        <Form method="patch" action="block" onSubmit={blockHandler}>
+        <Form method="patch" onSubmit={blockHandler}>
           <button
             type="submit"
             className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
@@ -58,7 +58,7 @@ export default function DashboardControl({ users }: { users: User[] }) {
             Block
           </button>
         </Form>
-        <Form method="patch" action="unblock" onSubmit={unblockHandler}>
+        <Form method="patch" onSubmit={unblockHandler}>
           <button
             type="submit"
             className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
@@ -66,7 +66,7 @@ export default function DashboardControl({ users }: { users: User[] }) {
             Unblock
           </button>
         </Form>
-        <Form method="delete" action="delete" onSubmit={deleteHandler}>
+        <Form method="delete" onSubmit={deleteHandler}>
           <button
             type="submit"
             className="h-12 w-32 rounded-md border bg-red-500 text-white hover:bg-red-500/80"
