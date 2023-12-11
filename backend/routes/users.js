@@ -32,7 +32,7 @@ users.get("/users", (_, res, next) => __awaiter(void 0, void 0, void 0, function
     });
     res.status(200).json(users);
     console.log("get 200");
-    res.send();
+    next();
 }));
 users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const usernames = req.body.data.usernames;
@@ -57,6 +57,5 @@ users.delete("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 users.use(checkActiveStatus_1.default);
 users.use((_, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("at this point everythin is good");
-    const users = yield db_1.default.user.findMany();
-    res.send(users);
+    res.send();
 }));

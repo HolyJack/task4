@@ -18,7 +18,7 @@ users.get("/users", async (_, res, next) => {
   });
   res.status(200).json(users);
   console.log("get 200");
-  res.send();
+  next();
 });
 
 users.patch("/users", async (req, res, next) => {
@@ -46,8 +46,7 @@ users.delete("/users", async (req, res, next) => {
 users.use(checkActiveStatus);
 users.use(async (_, res) => {
   console.log("at this point everythin is good");
-  const users = await prisma.user.findMany();
-  res.send(users);
+  res.send();
 });
 
 export { users };
