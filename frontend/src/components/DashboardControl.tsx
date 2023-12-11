@@ -15,19 +15,9 @@ function parseUsersToCols(users: User[]) {
   return columns;
 }
 
-export default function DashboardControl() {
-  const [users, setUsers] = useState<User[]>([]);
+export default function DashboardControl({ users }: { users: User[] }) {
   const cols: ColDef[] = parseUsersToCols(users);
   const dashboardRef = useRef<AgGridReact<User>>(null);
-
-  const updateUsers = useCallback(async () => {
-    const users = await usersApi.get();
-    setUsers(users || []);
-  }, []);
-
-  useEffect(() => {
-    updateUsers();
-  }, [updateUsers]);
 
   async function updateStatus(active: boolean) {
     const selected = dashboardRef.current?.api.getSelectedRows();

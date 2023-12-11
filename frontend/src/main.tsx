@@ -2,9 +2,14 @@ import ReactDOM from "react-dom/client";
 import MainPage from "./pages/MainPage";
 import "./index.css";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  redirect,
+  RouterProvider,
+} from "react-router-dom";
 import DashboardPage from "./pages/DashBoardPage";
 import Layout from "./pages/Layout";
+import axios from "./utils/axios";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +23,20 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <DashboardPage />,
+        loader: async () => {
+          try {
+            const res = await axios.get("users");
+            if (res.data) return res.data;
+          } catch (err) {
+            if (axios.isAxiosError(err) && err.response?.status === 401)
+              return redirect("/");
+            else {
+              console.log(err);
+            }
+          }
+        },
+        shouldRevalidate: ({ currentUrl }) =>
+          currentUrl.pathname === "/dashboard",
       },
     ],
   },

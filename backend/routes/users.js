@@ -55,7 +55,8 @@ users.delete("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     next();
 }));
 users.use(checkActiveStatus_1.default);
-users.use((_, res) => {
+users.use((_, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("at this point everythin is good");
-    res.send();
-});
+    const users = yield db_1.default.user.findMany();
+    res.send(users);
+}));

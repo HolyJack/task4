@@ -44,9 +44,10 @@ users.delete("/users", async (req, res, next) => {
 });
 
 users.use(checkActiveStatus);
-users.use((_, res) => {
+users.use(async (_, res) => {
   console.log("at this point everythin is good");
-  res.send();
+  const users = await prisma.user.findMany();
+  res.send(users);
 });
 
 export { users };
