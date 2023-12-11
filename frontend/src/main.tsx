@@ -38,7 +38,7 @@ const router = createBrowserRouter([
           return null;
         },
         shouldRevalidate: ({ currentUrl }) =>
-          currentUrl.pathname === "/dashboard",
+          currentUrl.pathname === "dashboard",
       },
     ],
   },
