@@ -32,7 +32,7 @@ users.get("/users", (_, res, next) => __awaiter(void 0, void 0, void 0, function
     });
     res.status(200).json(users);
     console.log("get 200");
-    next();
+    res.send();
 }));
 users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const usernames = req.body.data.usernames;
