@@ -3,7 +3,7 @@ import Dashboard from "./Dashboard";
 import usersApi, { User } from "../utils/users";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { useNavigate } from "react-router-dom";
+import { useRevalidator } from "react-router-dom";
 
 function parseUsersToCols(users: User[]) {
   const columns = users.length
@@ -17,7 +17,7 @@ function parseUsersToCols(users: User[]) {
 }
 
 export default function DashboardControl({ users }: { users: User[] }) {
-  const nav = useNavigate();
+  const revalidator = useRevalidator();
   const cols: ColDef[] = parseUsersToCols(users);
   const dashboardRef = useRef<AgGridReact<User>>(null);
 
@@ -28,7 +28,7 @@ export default function DashboardControl({ users }: { users: User[] }) {
     const usernames = selected.map((row) => row.username);
     const data = { usernames, active };
     await usersApi.update(data);
-    nav(".", { replace: true });
+    revalidator.revalidate();
   }
 
   function blockHandler() {
@@ -44,7 +44,7 @@ export default function DashboardControl({ users }: { users: User[] }) {
     if (!selected) return;
     const usernames = selected.map((row) => row.username);
     await usersApi.delete(usernames);
-    nav(".", { replace: true });
+    revalidator.revalidate();
   }
 
   return (

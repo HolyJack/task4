@@ -1,6 +1,5 @@
 import { AxiosResponse } from "axios";
 import axios from "./axios";
-import { redirect } from "react-router-dom";
 
 export interface User {
   username: string;
@@ -26,8 +25,7 @@ async function getUsers() {
     const res = await axios.get("users");
     return parseResToUsers(res);
   } catch (err) {
-    if (axios.isAxiosError(err) && err.response?.status === 401) redirect("/");
-    else console.log(err);
+    console.log(err);
   }
 }
 
@@ -38,8 +36,7 @@ async function updateUsers(data: any) {
     });
     return res;
   } catch (err) {
-    if (axios.isAxiosError(err) && err.response?.status === 401) redirect("/");
-    else console.log(err);
+    console.log(err);
   }
 }
 
@@ -50,8 +47,7 @@ async function deleteUsers(usernames: string[]) {
     });
     return res;
   } catch (err) {
-    if (axios.isAxiosError(err) && err.response?.status === 401) redirect("/");
-    if (err) console.log(err);
+    console.log(err);
   }
 }
 
