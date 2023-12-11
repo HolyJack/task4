@@ -24,12 +24,9 @@ function checkActiveStatus(req, res, next) {
                 res.clearCookie("connect.sid");
                 req.logout(function () {
                     return req.session.destroy(function () {
-                        console.log("active check middleware redirect");
-                        return res.status(401);
+                        res.redirect(401, "/");
                     });
                 });
-                console.log("active check middleware after logout");
-                res.send();
                 return;
             }
             else {

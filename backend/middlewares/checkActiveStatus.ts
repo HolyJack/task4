@@ -18,12 +18,9 @@ export default async function checkActiveStatus(
 
       req.logout(function () {
         return req.session.destroy(function () {
-          console.log("active check middleware redirect");
-          return res.status(401);
+          res.redirect(401, "/");
         });
       });
-      console.log("active check middleware after logout");
-      res.send();
       return;
     } else {
       console.log("should be all good");
