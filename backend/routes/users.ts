@@ -16,8 +16,9 @@ users.get("/users", async (_, res, next) => {
       active: true,
     },
   });
-  res.json(users);
-  return next();
+  res.status(200).json(users);
+  console.log("get 200");
+  next();
 });
 
 users.patch("/users", async (req, res, next) => {
@@ -28,7 +29,8 @@ users.patch("/users", async (req, res, next) => {
     data: { active },
   });
   res.status(204);
-  return next();
+  console.log("patch 204");
+  next();
 });
 
 users.delete("/users", async (req, res, next) => {
@@ -37,7 +39,8 @@ users.delete("/users", async (req, res, next) => {
     where: { username: { in: usernames } },
   });
   res.status(204);
-  return next();
+  console.log("delete 204");
+  next();
 });
 
 users.use(checkActiveStatus);

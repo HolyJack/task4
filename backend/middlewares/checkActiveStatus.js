@@ -16,24 +16,29 @@ const db_1 = __importDefault(require("../utils/db"));
 function checkActiveStatus(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = req.user.id;
+        console.log("active check middleware");
         try {
             const user = yield db_1.default.user.findUnique({ where: { id: userId } });
             if (!user || !user.active) {
                 res.clearCookie("connect.sid");
                 req.logout(function () {
                     return req.session.destroy(function () {
-                        return res.send();
+                        console.log("active check middleware redirect");
+                        return res.redirect("/");
                     });
                 });
-                return res.redirect("/");
+                console.log("active check middleware after logout");
+                return;
             }
             else {
-                return next();
+                console.log("should be all good");
+                next();
             }
         }
         catch (error) {
             console.error("Error checking active status:", error);
-            return res.status(500).json({ error: "Internal Server Error" });
+            res.status(500).json({ error: "Internal Server Error" });
+            res.send();
         }
     });
 }

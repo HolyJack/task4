@@ -30,8 +30,9 @@ users.get("/users", (_, res, next) => __awaiter(void 0, void 0, void 0, function
             active: true,
         },
     });
-    res.json(users);
-    return next();
+    res.status(200).json(users);
+    console.log("get 200");
+    next();
 }));
 users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const usernames = req.body.data.usernames;
@@ -41,7 +42,8 @@ users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         data: { active },
     });
     res.status(204);
-    return next();
+    console.log("patch 204");
+    next();
 }));
 users.delete("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const usernames = req.body.usernames;
@@ -49,6 +51,7 @@ users.delete("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         where: { username: { in: usernames } },
     });
     res.status(204);
-    return next();
+    console.log("delete 204");
+    next();
 }));
 users.use(checkActiveStatus_1.default);
