@@ -12,6 +12,7 @@ import Layout from "./pages/Layout";
 import axios from "./utils/axios";
 import { User } from "./utils/users";
 import { logout } from "./utils/auth";
+import { blockAction, deleteAction, unblockAction } from "./actions/actions";
 
 const router = createBrowserRouter([
   {
@@ -39,8 +40,22 @@ const router = createBrowserRouter([
           }
           return null;
         },
-        shouldRevalidate: ({ currentUrl }) =>
-          currentUrl.pathname === "dashboard",
+        children: [
+          {
+            path: "delete",
+            action: deleteAction,
+          },
+
+          {
+            path: "block",
+            action: blockAction,
+          },
+
+          {
+            path: "unblock",
+            action: unblockAction,
+          },
+        ],
       },
     ],
   },

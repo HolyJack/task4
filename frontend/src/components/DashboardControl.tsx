@@ -1,9 +1,9 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Dashboard from "./Dashboard";
 import usersApi, { User } from "../utils/users";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { Form } from "react-router-dom";
+import { ActionFunction, Form, redirect } from "react-router-dom";
 
 function parseUsersToCols(users: User[]) {
   const columns = users.length
@@ -19,35 +19,24 @@ function parseUsersToCols(users: User[]) {
 export default function DashboardControl({ users }: { users: User[] }) {
   const cols: ColDef[] = parseUsersToCols(users);
   const dashboardRef = useRef<AgGridReact<User>>(null);
+  const [selected, setSelected] = useState<string[]>([]);
 
-  async function updateStatus(active: boolean) {
-    const selected = dashboardRef.current?.api.getSelectedRows();
-    if (!selected) return;
-
-    const usernames = selected.map((row) => row.username);
-    const data = { usernames, active };
-    console.log(await usersApi.update(data));
+  function getSelected() {
+    return dashboardRef.current?.api
+      .getSelectedRows()
+      .map((row) => row.username);
   }
 
-  function blockHandler() {
-    updateStatus(false);
-  }
-
-  function unblockHandler() {
-    updateStatus(true);
-  }
-
-  async function deleteHandler() {
-    const selected = dashboardRef.current?.api.getSelectedRows();
-    if (!selected) return;
-    const usernames = selected.map((row) => row.username);
-    console.log(await usersApi.delete(usernames));
+  function changeSelection() {
+    const selected = getSelected();
+    setSelected(selected || []);
   }
 
   return (
     <div className="flex h-full w-full flex-col gap-2">
       <div className="flex gap-2">
-        <Form method="patch" onSubmit={blockHandler}>
+        <Form method="post" action="block">
+          <input name="selected" value={selected || []} hidden readOnly />
           <button
             type="submit"
             className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
@@ -55,7 +44,8 @@ export default function DashboardControl({ users }: { users: User[] }) {
             Block
           </button>
         </Form>
-        <Form method="patch" onSubmit={unblockHandler}>
+        <Form method="post" action="unblock">
+          <input name="selected" value={selected || []} hidden readOnly />
           <button
             type="submit"
             className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
@@ -63,7 +53,8 @@ export default function DashboardControl({ users }: { users: User[] }) {
             Unblock
           </button>
         </Form>
-        <Form method="delete" onSubmit={deleteHandler}>
+        <Form method="post" action="delete">
+          <input name="selected" value={selected || []} hidden readOnly />
           <button
             type="submit"
             className="h-12 w-32 rounded-md border bg-red-500 text-white hover:bg-red-500/80"
@@ -72,7 +63,12 @@ export default function DashboardControl({ users }: { users: User[] }) {
           </button>
         </Form>
       </div>
-      <Dashboard data={users} cols={cols} ref={dashboardRef} />
+      <Dashboard
+        data={users}
+        cols={cols}
+        ref={dashboardRef}
+        onSelectedChange={changeSelection}
+      />
     </div>
   );
 }

@@ -8,10 +8,14 @@ import { ColDef } from "ag-grid-community";
 interface DashboardProps {
   data: User[];
   cols: ColDef[];
+  onSelectedChange: () => void;
 }
 
 const Dashboard = forwardRef<AgGridReact<User>, DashboardProps>(
-  ({ data, cols }, ref) => {
+  ({ data, cols, onSelectedChange }, ref) => {
+    function changeSelected() {
+      onSelectedChange();
+    }
     return (
       <section className="ag-theme-quartz flex-1">
         <AgGridReact<User>
@@ -19,6 +23,7 @@ const Dashboard = forwardRef<AgGridReact<User>, DashboardProps>(
           rowData={data}
           columnDefs={cols}
           rowSelection="multiple"
+          onSelectionChanged={changeSelected}
         />
       </section>
     );
