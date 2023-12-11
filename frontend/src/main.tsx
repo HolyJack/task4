@@ -11,6 +11,7 @@ import DashboardPage from "./pages/DashBoardPage";
 import Layout from "./pages/Layout";
 import axios from "./utils/axios";
 import { User } from "./utils/users";
+import { logout } from "./utils/auth";
 
 const router = createBrowserRouter([
   {
@@ -29,9 +30,10 @@ const router = createBrowserRouter([
             const res = await axios.get("users");
             if (res.data) return res.data as User[];
           } catch (err) {
-            if (axios.isAxiosError(err) && err.response?.status === 401)
+            if (axios.isAxiosError(err) && err.response?.status === 401) {
+              logout();
               return redirect("/");
-            else {
+            } else {
               console.log(err);
             }
           }

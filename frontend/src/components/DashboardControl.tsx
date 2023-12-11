@@ -27,7 +27,7 @@ export default function DashboardControl({ users }: { users: User[] }) {
 
     const usernames = selected.map((row) => row.username);
     const data = { usernames, active };
-    usersApi.update(data);
+    await usersApi.update(data);
     nav(".", { replace: true });
   }
 
