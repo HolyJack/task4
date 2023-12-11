@@ -31,7 +31,7 @@ app.use(
 
 app.use(
   cors({
-    origin: "https://task4-react-front.vercel.app",
+    origin: ["https://task4-react-front.vercel.app", "http://localhost:5173"],
     credentials: true,
   }),
 );
