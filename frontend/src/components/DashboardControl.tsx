@@ -17,7 +17,6 @@ function parseUsersToCols(users: User[]) {
 }
 
 export default function DashboardControl({ users }: { users: User[] }) {
-  const revalidator = useRevalidator();
   const cols: ColDef[] = parseUsersToCols(users);
   const dashboardRef = useRef<AgGridReact<User>>(null);
 
@@ -28,7 +27,6 @@ export default function DashboardControl({ users }: { users: User[] }) {
     const usernames = selected.map((row) => row.username);
     const data = { usernames, active };
     console.log(await usersApi.update(data));
-    revalidator.revalidate();
   }
 
   function blockHandler() {
@@ -44,7 +42,6 @@ export default function DashboardControl({ users }: { users: User[] }) {
     if (!selected) return;
     const usernames = selected.map((row) => row.username);
     console.log(await usersApi.delete(usernames));
-    revalidator.revalidate();
   }
 
   return (
