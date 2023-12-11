@@ -33,7 +33,7 @@ auth.post("/signin", (req, res, next) => passport_1.default.authenticate("local"
             });
         }
         catch (err) {
-            next(err);
+            return next(err);
         }
         return res.json({ message: "Login successful!", user: user.username });
     }));

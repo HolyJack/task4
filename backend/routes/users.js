@@ -19,8 +19,8 @@ const authenticateStatus_1 = __importDefault(require("../middlewares/authenticat
 const checkActiveStatus_1 = __importDefault(require("../middlewares/checkActiveStatus"));
 const users = express_1.default.Router();
 exports.users = users;
-users.use(checkActiveStatus_1.default);
 users.use(authenticateStatus_1.default);
+users.use(checkActiveStatus_1.default);
 users.get("/users", (_, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield db_1.default.user.findMany({
         select: {
@@ -55,3 +55,7 @@ users.delete("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     next();
 }));
 users.use(checkActiveStatus_1.default);
+users.use((_, res) => {
+    console.log("at this point everythin is good");
+    res.send();
+});

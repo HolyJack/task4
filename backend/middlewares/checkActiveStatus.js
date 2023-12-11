@@ -20,6 +20,7 @@ function checkActiveStatus(req, res, next) {
         try {
             const user = yield db_1.default.user.findUnique({ where: { id: userId } });
             if (!user || !user.active) {
+                console.log("user is about to logged out and seesion destroyed");
                 res.clearCookie("connect.sid");
                 req.logout(function () {
                     return req.session.destroy(function () {

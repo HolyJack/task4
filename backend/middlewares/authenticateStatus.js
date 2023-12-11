@@ -5,7 +5,8 @@ function authenticateStatus(req, res, next) {
         return next();
     }
     else {
-        return res.status(401).json({ message: "Unauthorized" });
+        res.status(401).json({ message: "Unauthorized" });
+        res.send();
     }
 }
 exports.default = authenticateStatus;
