@@ -10,6 +10,7 @@ import {
 import DashboardPage from "./pages/DashBoardPage";
 import Layout from "./pages/Layout";
 import axios from "./utils/axios";
+import { User } from "./utils/users";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
         loader: async () => {
           try {
             const res = await axios.get("users");
-            if (res.data) return res.data;
+            if (res.data) return res.data as User[];
           } catch (err) {
             if (axios.isAxiosError(err) && err.response?.status === 401)
               return redirect("/");
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
               console.log(err);
             }
           }
+          return null;
         },
         shouldRevalidate: ({ currentUrl }) =>
           currentUrl.pathname === "/dashboard",
