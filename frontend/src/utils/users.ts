@@ -25,7 +25,7 @@ async function getUsers() {
     const res = await axios.get("users");
     return parseResToUsers(res);
   } catch (err) {
-    console.log(err);
+    if (axios.isAxiosError(err) && err.status === 401) console.log(err);
   }
 }
 
@@ -34,7 +34,7 @@ async function updateUsers(data: any) {
     const res = await axios.patch("users", {
       data: data,
     });
-    return res;
+    return "ok";
   } catch (err) {
     console.log(err);
   }
@@ -45,9 +45,10 @@ async function deleteUsers(usernames: string[]) {
     const res = await axios.delete("users", {
       data: { usernames },
     });
-    return res;
+    return "ok";
   } catch (err) {
-    console.log(err);
+    if (axios.isAxiosError(err)) return err.status;
+    return err;
   }
 }
 

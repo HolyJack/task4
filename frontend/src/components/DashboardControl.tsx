@@ -1,9 +1,9 @@
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import Dashboard from "./Dashboard";
 import usersApi, { User } from "../utils/users";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { useRevalidator } from "react-router-dom";
+import { Form, useRevalidator } from "react-router-dom";
 
 function parseUsersToCols(users: User[]) {
   const columns = users.length
@@ -50,24 +50,30 @@ export default function DashboardControl({ users }: { users: User[] }) {
   return (
     <div className="flex h-full w-full flex-col gap-2">
       <div className="flex gap-2">
-        <button
-          onClick={blockHandler}
-          className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
-        >
-          Block
-        </button>
-        <button
-          onClick={unblockHandler}
-          className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
-        >
-          Unblock
-        </button>
-        <button
-          onClick={deleteHandler}
-          className="h-12 w-32 rounded-md border bg-red-500 text-white hover:bg-red-500/80"
-        >
-          Delete
-        </button>
+        <Form method="patch" action="block" onSubmit={blockHandler}>
+          <button
+            type="submit"
+            className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
+          >
+            Block
+          </button>
+        </Form>
+        <Form method="patch" action="unblock" onSubmit={unblockHandler}>
+          <button
+            type="submit"
+            className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
+          >
+            Unblock
+          </button>
+        </Form>
+        <Form method="delete" action="delete" onSubmit={deleteHandler}>
+          <button
+            type="submit"
+            className="h-12 w-32 rounded-md border bg-red-500 text-white hover:bg-red-500/80"
+          >
+            Delete
+          </button>
+        </Form>
       </div>
       <Dashboard data={users} cols={cols} ref={dashboardRef} />
     </div>
