@@ -39,6 +39,8 @@ users.patch("/users", async (req, res, next) => {
 });
 
 users.delete("/users", async (req, res, next) => {
+  console.log(req.body);
+  return;
   const usernames = req.body.data.usernames;
   console.log(usernames);
   if (!usernames) {

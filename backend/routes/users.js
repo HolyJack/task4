@@ -50,6 +50,8 @@ users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
     next();
 }));
 users.delete("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
+    return;
     const usernames = req.body.data.usernames;
     console.log(usernames);
     if (!usernames) {
