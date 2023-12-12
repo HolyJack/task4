@@ -35,8 +35,10 @@ users.get("/users", (_, res, next) => __awaiter(void 0, void 0, void 0, function
 }));
 users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const usernames = req.body.data.usernames;
-    const active = req.body.active;
-    if (!usernames || !active) {
+    const active = req.body.data.active;
+    console.log(usernames);
+    console.log(active);
+    if (!usernames || typeof active !== "boolean") {
         res.status(422).send();
         return;
     }
@@ -49,6 +51,7 @@ users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
 }));
 users.delete("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const usernames = req.body.data.usernames;
+    console.log(usernames);
     if (!usernames) {
         res.status(422).send();
         return;
