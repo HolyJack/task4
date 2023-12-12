@@ -34,7 +34,7 @@ users.get("/users", (_, res, next) => __awaiter(void 0, void 0, void 0, function
     next();
 }));
 users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const usernames = req.body.usernames;
+    const usernames = req.body.data.usernames;
     const active = req.body.active;
     if (!usernames || !active) {
         res.status(422).send();
@@ -48,7 +48,7 @@ users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
     next();
 }));
 users.delete("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const usernames = req.body.usernames;
+    const usernames = req.body.data.usernames;
     if (!usernames) {
         res.status(422).send();
         return;

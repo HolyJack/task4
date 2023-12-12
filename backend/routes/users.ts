@@ -21,7 +21,7 @@ users.get("/users", async (_, res, next) => {
 });
 
 users.patch("/users", async (req, res, next) => {
-  const usernames = req.body.usernames;
+  const usernames = req.body.data.usernames;
   const active = req.body.active;
   if (!usernames || !active) {
     res.status(422).send();
@@ -36,7 +36,7 @@ users.patch("/users", async (req, res, next) => {
 });
 
 users.delete("/users", async (req, res, next) => {
-  const usernames = req.body.usernames;
+  const usernames = req.body.data.usernames;
   if (!usernames) {
     res.status(422).send();
     return;
