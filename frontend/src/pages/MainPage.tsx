@@ -1,11 +1,11 @@
 import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
 import SignOut from "../components/SignOut";
+import { useAuth } from "../context/authContext";
 
 export default function MainPage() {
-  const signedin = sessionStorage.getItem("signedin");
-
-  if (signedin)
+  const auth = useAuth();
+  if (auth.status)
     return (
       <div className="flex w-full justify-center">
         <SignOut className="rounded-md border shadow" />

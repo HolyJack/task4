@@ -16,6 +16,7 @@ export default function SignUp() {
             placeholder:text-gray-300 focus:placeholder:text-transparent"
           type="text"
           name="username"
+          autoComplete="username"
           placeholder="Username"
           required
         />
@@ -25,6 +26,7 @@ export default function SignUp() {
             placeholder:text-gray-300 focus:placeholder:text-transparent"
           type="email"
           name="email"
+          autoComplete="email"
           placeholder="E-mail"
           required
         />
@@ -34,7 +36,7 @@ export default function SignUp() {
             placeholder:text-gray-300 focus:placeholder:text-transparent"
           name="password"
           type="password"
-          autoComplete="current-password"
+          autoComplete="password"
           placeholder="Password"
           required
         />

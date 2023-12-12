@@ -15,7 +15,6 @@ function usersActionsWrapper(
   const usersAction: ActionFunction = async ({ request }) => {
     const formData = await request.formData();
     const usernames = (formData.get("selected") as string).split(",");
-    console.log(usernames);
     usernames &&
       usernames.length &&
       (await action(

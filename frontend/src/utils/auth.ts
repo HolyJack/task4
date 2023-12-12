@@ -1,7 +1,7 @@
 const AUTH = "auth";
 
-function login() {
-  sessionStorage.setItem(AUTH, "true");
+function login(username: string) {
+  sessionStorage.setItem(AUTH, username);
 }
 
 function logout() {

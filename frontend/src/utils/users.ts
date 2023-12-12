@@ -25,7 +25,8 @@ async function getUsers() {
     const res = await axios.get("users");
     return parseResToUsers(res);
   } catch (err) {
-    console.log(err);
+    if (axios.isAxiosError(err) && err.response?.data)
+      window.alert(err.response.data.message);
   }
 }
 
@@ -35,7 +36,8 @@ async function updateUsers(params: { usernames: string[]; active: boolean }) {
       data: { ...params },
     });
   } catch (err) {
-    console.log(err);
+    if (axios.isAxiosError(err) && err.response?.data)
+      window.alert(err.response.data.message);
   }
 }
 
@@ -45,7 +47,8 @@ async function deleteUsers(params: { usernames: string[] }) {
       data: { ...params },
     });
   } catch (err) {
-    console.log(err);
+    if (axios.isAxiosError(err) && err.response?.data)
+      window.alert(err.response.data.message);
   }
 }
 
