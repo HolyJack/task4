@@ -29,17 +29,17 @@ async function getUsers() {
   }
 }
 
-async function updateUsers(params: { selected: string[]; active: boolean }) {
+async function updateUsers(params: { usernames: string[]; active: boolean }) {
   try {
     await axios.patch("users", {
-      ...params,
+      data: { ...params },
     });
   } catch (err) {
     console.log(err);
   }
 }
 
-async function deleteUsers(params: { selected: string[] }) {
+async function deleteUsers(params: { usernames: string[] }) {
   try {
     await axios.delete("users", {
       data: { ...params },

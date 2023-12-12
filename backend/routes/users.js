@@ -31,31 +31,35 @@ users.get("/users", (_, res, next) => __awaiter(void 0, void 0, void 0, function
         },
     });
     res.status(200).json(users);
-    console.log("get 200");
     next();
 }));
 users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const usernames = req.body.data.usernames;
-    const active = req.body.data.active;
+    const usernames = req.body.usernames;
+    const active = req.body.active;
+    if (!usernames || !active) {
+        res.status(422).send();
+        return;
+    }
     yield db_1.default.user.updateMany({
         where: { username: { in: usernames } },
         data: { active },
     });
     res.status(204);
-    console.log("patch 204");
     next();
 }));
 users.delete("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const usernames = req.body.usernames;
+    if (!usernames) {
+        res.status(422).send();
+        return;
+    }
     yield db_1.default.user.deleteMany({
         where: { username: { in: usernames } },
     });
     res.status(204);
-    console.log("delete 204");
     next();
 }));
 users.use(checkActiveStatus_1.default);
 users.use((_, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("at this point everythin is good");
     res.send();
 }));

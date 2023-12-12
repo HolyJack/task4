@@ -8,12 +8,10 @@ export default async function checkActiveStatus(
   next: NextFunction,
 ) {
   const userId = (req.user as User).id;
-  console.log("active check middleware");
   try {
     const user = await prisma.user.findUnique({ where: { id: userId } });
 
     if (!user || !user.active) {
-      console.log("user is about to logged out and seesion destroyed");
       res.clearCookie("connect.sid");
 
       req.logout(function () {
@@ -23,11 +21,9 @@ export default async function checkActiveStatus(
       });
       return;
     } else {
-      console.log("should be all good");
       next();
     }
   } catch (error) {
-    console.error("Error checking active status:", error);
     res.status(500).json({ error: "Internal Server Error" });
     res.send();
   }

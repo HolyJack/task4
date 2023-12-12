@@ -3,10 +3,10 @@ import usersApi from "../utils/users";
 
 type actionParams =
   | {
-      selected: string[];
+      usernames: string[];
       active: boolean;
     }
-  | { selected: string[] };
+  | { usernames: string[] };
 
 function usersActionsWrapper(
   action: (params: actionParams) => Promise<void>,
@@ -14,12 +14,12 @@ function usersActionsWrapper(
 ) {
   const usersAction: ActionFunction = async ({ request }) => {
     const formData = await request.formData();
-    const selected = (formData.get("selected") as string).split(",");
-    console.log(selected);
-    selected &&
-      selected.length &&
+    const usernames = (formData.get("selected") as string).split(",");
+    console.log(usernames);
+    usernames &&
+      usernames.length &&
       (await action(
-        typeof active === "boolean" ? { selected, active } : { selected },
+        typeof active === "boolean" ? { usernames, active } : { usernames },
       ));
     return redirect("/dashboard");
   };
