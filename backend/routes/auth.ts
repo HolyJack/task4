@@ -64,6 +64,7 @@ auth.post("/signup", async (req, res) => {
   });
   res.status(201).json({
     status: "created",
+    message: `$User "${user.username}" created!`,
     username: user.username,
   });
 });

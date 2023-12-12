@@ -74,6 +74,7 @@ auth.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* (
     });
     res.status(201).json({
         status: "created",
+        message: `$User "${user.username}" created!`,
         username: user.username,
     });
 }));
