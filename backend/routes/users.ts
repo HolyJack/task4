@@ -40,6 +40,7 @@ users.patch("/users", async (req, res, next) => {
 
 users.delete("/users", async (req, res, next) => {
   console.log(req.body);
+  res.send();
   return;
   const usernames = req.body.data.usernames;
   console.log(usernames);
