@@ -13,6 +13,14 @@ const port = 3000;
 const env = config();
 
 app.use(passport.initialize());
+app.use(
+  cors({
+    origin: "https://task4-react-front.vercel.app",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  }),
+);
+
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
@@ -25,7 +33,6 @@ app.use(
       maxAge: oneDay,
       sameSite: "none",
       secure: true,
-      domain: "vercel.app",
     },
   }),
 );

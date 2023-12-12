@@ -25,6 +25,11 @@ const app = (0, express_1.default)();
 const port = 3000;
 const env = (0, dotenv_1.config)();
 app.use(passport_1.default.initialize());
+app.use((0, cors_1.default)({
+    origin: "https://task4-react-front.vercel.app",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+}));
 const oneDay = 1000 * 60 * 60 * 24;
 app.use((0, express_session_1.default)({
     secret: ((_a = env.parsed) === null || _a === void 0 ? void 0 : _a.SECRET) || "dev",
@@ -36,7 +41,6 @@ app.use((0, express_session_1.default)({
         maxAge: oneDay,
         sameSite: "none",
         secure: true,
-        domain: "vercel.app",
     },
 }));
 app.use((0, cors_1.default)({
