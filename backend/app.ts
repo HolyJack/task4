@@ -13,15 +13,14 @@ const port = 3000;
 const env = config();
 
 app.use(passport.initialize());
+const oneDay = 1000 * 60 * 60 * 24;
+
 app.use(
   cors({
-    origin: "https://task4-react-front.vercel.app",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    origin: ["https://task4-react-front.vercel.app", "http://localhost:5173"],
     credentials: true,
   }),
 );
-
-const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
     secret: env.parsed?.SECRET || "dev",
@@ -37,12 +36,6 @@ app.use(
   }),
 );
 
-app.use(
-  cors({
-    origin: ["https://task4-react-front.vercel.app", "http://localhost:5173"],
-    credentials: true,
-  }),
-);
 app.use(express.json());
 app.use(passport.session());
 
