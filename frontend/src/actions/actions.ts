@@ -1,23 +1,38 @@
 import { ActionFunction, redirect } from "react-router-dom";
 import usersApi from "../utils/users";
 
-export const unblockAction: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const selected = formData.getAll("selected") as string[];
-  selected && (await usersApi.update({ selected, active: true }));
-  return redirect("/dashboard");
-};
+type actionParams =
+  | {
+      selected: string[];
+      active: boolean;
+    }
+  | { selected: string[] };
 
-export const blockAction: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const selected = formData.getAll("selected") as string[];
-  selected && (await usersApi.update({ selected, active: false }));
-  return redirect("/dashboard");
-};
+function usersActionsWrapper(
+  action: (params: actionParams) => Promise<void>,
+  active?: boolean,
+) {
+  const usersAction: ActionFunction = async ({ request }) => {
+    const formData = await request.formData();
+    const selected = (formData.get("selected") as string).split(",");
+    console.log(selected);
+    selected &&
+      selected.length &&
+      (await action(
+        typeof active === "boolean" ? { selected, active } : { selected },
+      ));
+    return redirect("/dashboard");
+  };
 
-export const deleteAction: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const selected = formData.getAll("selected") as string[];
-  selected && (await usersApi.delete(selected));
-  return redirect("/dashboard");
-};
+  return usersAction;
+}
+
+export const unblockAction = usersActionsWrapper(
+  usersApi.update as (params: actionParams) => Promise<void>,
+  true,
+);
+export const blockAction = usersActionsWrapper(
+  usersApi.update as (params: actionParams) => Promise<void>,
+  false,
+);
+export const deleteAction = usersActionsWrapper(usersApi.delete);

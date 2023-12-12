@@ -25,32 +25,27 @@ async function getUsers() {
     const res = await axios.get("users");
     return parseResToUsers(res);
   } catch (err) {
-    if (axios.isAxiosError(err)) return err.status;
-    return err;
+    console.log(err);
   }
 }
 
-async function updateUsers(data: any) {
+async function updateUsers(params: { selected: string[]; active: boolean }) {
   try {
     await axios.patch("users", {
-      data: data,
+      ...params,
     });
-    return "ok";
   } catch (err) {
-    if (axios.isAxiosError(err)) return err.status;
-    return err;
+    console.log(err);
   }
 }
 
-async function deleteUsers(usernames: string[]) {
+async function deleteUsers(params: { selected: string[] }) {
   try {
     await axios.delete("users", {
-      data: { usernames },
+      data: { ...params },
     });
-    return "ok";
   } catch (err) {
-    if (axios.isAxiosError(err)) return err.status;
-    return err;
+    console.log(err);
   }
 }
 
