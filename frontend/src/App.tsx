@@ -37,7 +37,7 @@ export default function App() {
               element: <MainPage />,
             },
             {
-              path: "dashboard",
+              path: "/dashboard",
               element: <DashboardPage />,
               loader: async () => {
                 try {
@@ -46,10 +46,11 @@ export default function App() {
                 } catch (err) {
                   if (axios.isAxiosError(err) && err.response?.status === 401) {
                     auth.logout();
-                    return redirect("/");
+                    window.alert(err.response?.data.message);
                   } else {
                     console.log(err);
                   }
+                  return redirect("/");
                 }
                 return null;
               },

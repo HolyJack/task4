@@ -5,7 +5,7 @@ export default function SignOut({ className }: { className?: string }) {
   const auth = useAuth();
 
   const signButtonStyle =
-    "flex h-12 w-32 items-center justify-center hover:bg-blue-400 hover:text-white " +
+    "flex h-12 w-32 items-center justify-center bg-gray-400 text-white hover:bg-blue-400" +
     className;
 
   if (auth.status)

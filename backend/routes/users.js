@@ -25,6 +25,7 @@ users.get("/users", (_, res, next) => __awaiter(void 0, void 0, void 0, function
     const users = yield db_1.default.user.findMany({
         select: {
             username: true,
+            email: true,
             createdAt: true,
             signinAt: true,
             active: true,
@@ -37,8 +38,6 @@ users.patch("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, func
     var _a, _b, _c, _d;
     const usernames = (_b = (_a = req.body) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.usernames;
     const active = (_d = (_c = req.body) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.active;
-    console.log(usernames);
-    console.log(active);
     if (!usernames || typeof active !== "boolean") {
         res.status(422).send();
         return;

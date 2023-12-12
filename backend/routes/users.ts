@@ -11,6 +11,7 @@ users.get("/users", async (_, res, next) => {
   const users = await prisma.user.findMany({
     select: {
       username: true,
+      email: true,
       createdAt: true,
       signinAt: true,
       active: true,
@@ -24,8 +25,6 @@ users.patch("/users", async (req, res, next) => {
   const usernames = req.body?.data?.usernames;
   const active = req.body?.data?.active;
 
-  console.log(usernames);
-  console.log(active);
   if (!usernames || typeof active !== "boolean") {
     res.status(422).send();
     return;

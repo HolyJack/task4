@@ -11,7 +11,6 @@ export function signinAction(auth: AuthContextValues) {
       const res = await axios.post("/signin", { username, password });
       console.log(res.data.user);
       auth.login(res.data.user);
-      return redirect("/dashboard");
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.data)
         window.alert(err.response.data.message);
@@ -26,7 +25,6 @@ export function signoutAction(auth: AuthContextValues) {
     try {
       await axios.delete("/signout");
       auth.logout();
-      return redirect("/");
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.data)
         window.alert(err.response.data.message);
@@ -43,7 +41,6 @@ export const signupAction: ActionFunction = async ({ request }) => {
   const email = formData.get("email");
   try {
     await axios.post("/signup", { username, password, email });
-    return redirect("/");
   } catch (err) {
     if (axios.isAxiosError(err) && err.response?.data)
       window.alert(err.response.data.message);

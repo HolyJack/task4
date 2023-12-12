@@ -5,7 +5,7 @@ import { AuthContextProvider } from "./context/authContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthContextProvider>
+    <AuthContextProvider initial={window.sessionStorage.getItem("username")}>
       <App />
     </AuthContextProvider>
   </StrictMode>,
