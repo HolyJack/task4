@@ -4,6 +4,8 @@ import { User } from "../utils/users";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { Form } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock, faLockOpen, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function parseUsersToCols(users: User[]) {
   const columns = users.length
@@ -39,27 +41,28 @@ export default function DashboardControl({ users }: { users: User[] }) {
           <input name="selected" value={selected} hidden readOnly />
           <button
             type="submit"
-            className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
+            className="h-12 w-32 rounded-md border shadow hover:bg-gray-300/20"
           >
-            Block
+            <FontAwesomeIcon icon={faLock} /> Block
           </button>
         </Form>
         <Form method="post" action="unblock">
           <input name="selected" value={selected} hidden readOnly />
           <button
             type="submit"
-            className="h-12 w-32 rounded-md border hover:bg-gray-300/20"
+            className="h-12 w-12 rounded-md border shadow hover:bg-gray-300/20"
           >
-            Unblock
+            <FontAwesomeIcon icon={faLockOpen} />
           </button>
         </Form>
         <Form method="post" action="delete">
           <input name="selected" value={selected} hidden readOnly />
           <button
             type="submit"
-            className="h-12 w-32 rounded-md border bg-red-500 text-white hover:bg-red-500/80"
+            className="flex h-12 w-12 items-center justify-center rounded-md
+            border bg-red-500 text-white shadow hover:bg-red-500/80"
           >
-            Delete
+            <FontAwesomeIcon icon={faTrash} />
           </button>
         </Form>
       </div>

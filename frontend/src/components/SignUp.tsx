@@ -1,40 +1,11 @@
+import { Form } from "react-router-dom";
 import FormSubmit from "./FormSubmit";
-import axios from "../utils/axios";
 
 export default function SignUp() {
-  async function register({
-    username,
-    email,
-    password,
-  }: {
-    username: string;
-    email: string;
-    password: string;
-  }) {
-    try {
-      const res = await axios.post("/signup", {
-        username,
-        password,
-        email,
-      });
-      window.alert(`User ${res.data.username} created successfully.`);
-    } catch (err) {
-      if (axios.isAxiosError(err)) window.alert(err.response?.data?.message);
-      else console.log(err);
-    }
-  }
-
-  function signupAction(formData: FormData) {
-    const username = formData.get("username") as string;
-    const password = formData.get("password") as string;
-    const email = formData.get("email") as string;
-    register({ username, email, password });
-  }
-
   return (
-    <form
-      //@ts-expect-error: experimental feature
-      action={signupAction}
+    <Form
+      method="post"
+      action="signup"
       className="flex flex-1 flex-col justify-evenly gap-5
         px-20 py-10"
     >
@@ -69,6 +40,6 @@ export default function SignUp() {
         />
       </div>
       <FormSubmit />
-    </form>
+    </Form>
   );
 }

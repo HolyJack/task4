@@ -1,21 +1,8 @@
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { authGetStatus, logout } from "../utils/auth";
+import { Form } from "react-router-dom";
+import { authGetStatus } from "../utils/auth";
 
 export default function SignOut({ className }: { className?: string }) {
-  const navigate = useNavigate();
   const authStatus = authGetStatus();
-
-  async function signOut() {
-    try {
-      await axios.delete("signout");
-      logout();
-      navigate(0);
-    } catch (err) {
-      if (axios.isAxiosError(err)) window.alert(err.response?.data?.message);
-      else console.log(err);
-    }
-  }
 
   const signButtonStyle =
     "flex h-12 w-32 items-center justify-center hover:bg-blue-400 hover:text-white " +
@@ -23,9 +10,11 @@ export default function SignOut({ className }: { className?: string }) {
 
   if (authStatus)
     return (
-      <button className={signButtonStyle} onClick={signOut}>
-        Sign Out
-      </button>
+      <Form method="post" action="signout">
+        <button type="submit" className={signButtonStyle}>
+          Sign Out
+        </button>
+      </Form>
     );
 
   return (

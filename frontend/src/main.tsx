@@ -12,7 +12,17 @@ import Layout from "./pages/Layout";
 import axios from "./utils/axios";
 import { User } from "./utils/users";
 import { logout } from "./utils/auth";
-import { blockAction, deleteAction, unblockAction } from "./actions/actions";
+import {
+  blockAction,
+  deleteAction,
+  unblockAction,
+} from "./actions/usersActions";
+import {
+  signinAction,
+  signoutAction,
+  signupAction,
+} from "./actions/authAction";
+import { StrictMode } from "react";
 
 const router = createBrowserRouter([
   {
@@ -59,8 +69,22 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/signin",
+    action: signinAction,
+  },
+  {
+    path: "/signout",
+    action: signoutAction,
+  },
+  {
+    path: "/signup",
+    action: signupAction,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <RouterProvider router={router} />,
+  <StrictMode>
+    <RouterProvider router={router} />,
+  </StrictMode>,
 );
