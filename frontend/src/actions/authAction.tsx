@@ -9,7 +9,7 @@ export function signinAction(auth: AuthContextValues) {
     const password = formData.get("password");
     try {
       const res = await axios.post("/signin", { username, password });
-      console.log(res.data.user);
+      window.alert(res.data?.message);
       auth.login(res.data.user);
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.data)
@@ -40,7 +40,8 @@ export const signupAction: ActionFunction = async ({ request }) => {
   const password = formData.get("password");
   const email = formData.get("email");
   try {
-    await axios.post("/signup", { username, password, email });
+    const res = await axios.post("/signup", { username, password, email });
+    window.alert(res.data?.message);
   } catch (err) {
     if (axios.isAxiosError(err) && err.response?.data)
       window.alert(err.response.data.message);
